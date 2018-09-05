@@ -1,7 +1,7 @@
 const User=require('../models/user')
 const bcrypt=require('bcrypt')
 const mongoose=require('mongoose')
-
+const jwt=require('jsonwebtoken')
 //test
 exports.sayhi=(req,res)=>{
     res.status(200).json({message:"how far"})
@@ -41,3 +41,30 @@ exports.signup=(req,res)=>{
 }
 
 //sign in a user
+exports.signin=(req,res)=>{
+    User.findOne({email:req.body.email})
+    .exec().then(user=>{
+        if(user.length<1){
+            return res.status(404).json({code:0,message:"This account does not exist"})
+        }else{
+            bcrypt.compare(req.body.password,user.password,(err,result)=>{
+                if(err){
+                    return res.status(404).json({code:0,message:"An error occurred"})
+                }
+                if(result){
+                    const token=jwt.sign({email:user.email,userId:user._id},process.env.JWT,{
+                        expiresIn:"1h"
+                    })
+                    return res.status(200).json({code:1,message:"Signin successfull",token:token}) 
+                }
+                else{
+                    return res.status(200).json({code:0,message:"Authentication failed"})
+                }
+            })
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+        return res.status(500).json({code:0,message:"An error occurred"})
+    })
+}

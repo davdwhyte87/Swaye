@@ -4,5 +4,5 @@ const UserController=require('../controllers/user')
 
 router.get('/',UserController.sayhi)
 router.post('/signup',UserController.signup)
-
+router.post('/signin',UserController.signin)
 module.exports=router;

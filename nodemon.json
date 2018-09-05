@@ -1,5 +1,6 @@
 {
     "env":{
-        "DB_URL":"mongodb://localhost/SwayeDb"
+        "DB_URL":"mongodb://localhost/SwayeDb",
+        "JWT":"wwwoieooooeieoeoeoirrororiroro349949i5ioriokrork"
     }
 }
