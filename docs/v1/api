@@ -1,0 +1,35 @@
+Swaye APi
+-----------
+
+-/signup [POST. name,email password]
+-/signin [POST. email,password]
+-/confirm [POST. code]
+-/
+
+Admin
+------
+-/admin/create
+-/admin/:id/delete
+
+Menu
+------
+-/menu/add [POST. name,image,price,qty]
+-/menu/:id/delete [GET] 
+-/menu/ [GET]
+-menu/:id/update [POST. name,image,price,qty]
+
+Order
+------
+-/order/create [POST. summary,price,tablennumber,confirmed]
+-/order/user/:id
+-/order [GET]
+-/order/user/:id/confirm [GET]
+
+Transaction
+-------------
+-/transaction/create [POST. price,summary,confirmedA,confirmedU]
+-/transaction/:id [GET]
+-/transaction/ [GET]
+-/transaction/user/:id [GET]
+-/transaction/uconfirm/:tablennumber [GET]
+-/transaction/aconfirm/:tablennumber [GET]

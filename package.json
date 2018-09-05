@@ -1,0 +1,32 @@
+{
+  "name": "pie_music",
+  "version": "1.0.0",
+  "description": "An api written in node js for online streaming service",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "Js",
+    "Node",
+    "Js",
+    "Api",
+    "Streaming",
+    "Service"
+  ],
+  "author": "David whyte John",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.12"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.0"
+  }
+}
