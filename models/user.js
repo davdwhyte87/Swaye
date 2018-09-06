@@ -7,6 +7,7 @@ const userSchema=mongoose.Schema({
     phone:String,
     password:{type:String,required:true},
     confirmed:{type:Boolean,required:true,default:false},
+    code:{type:Number,required:true},
     created_at:Date
 })
 

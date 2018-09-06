@@ -1,10 +1,15 @@
 Swaye APi
 -----------
 
+User {/user}
+------
 -/signup [POST. name,email password]
 -/signin [POST. email,password]
 -/confirm [POST. code]
--/
+-/forgot_pass [POST. email]
+-/forgot_pass/changepass [POST. code,new_password]
+-/changepass [POST. old_password,new_password] *
+-/ [GET] *
 
 Admin
 ------
