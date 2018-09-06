@@ -144,3 +144,23 @@ exports.fchange_pass=(req,res)=>{
         return res.status(500).json({code:0,error:error,message:"An error occurred"}) 
     })
 }
+
+//get a signed in user
+//protected function
+exports.user=(req,res)=>{
+    var user_id=req.userData.userId
+    User.findOne({_id:user_id})
+    .select("name email phone")
+    .exec()
+    .then(user=>{
+        if(user){
+            return res.status(200).json({code:1,data:user})
+        }
+        else{
+            return res.status(200).json({code:0,message:"This account does not exist"})
+        }
+    })
+    .catch(error=>{
+        return res.status(500).json({code:0,error:error})
+    })
+}

@@ -3,7 +3,7 @@ var router=express.Router()
 const UserController=require('../controllers/user')
 const Auth=require('../middleware/auth')
 
-router.get('/',Auth,UserController.sayhi)
+router.get('/',Auth,UserController.user)
 router.post('/signup',UserController.signup)
 router.post('/signin',UserController.signin)
 router.post('/confirm',UserController.confirm)
