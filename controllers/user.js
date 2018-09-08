@@ -20,7 +20,7 @@ exports.signup=(req,res)=>{
                 }
                 else{
                     code=Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 1) + 1)//genrate 5 random numbers
-                    user=new User({
+                    var user=new User({
                         _id:new mongoose.Types.ObjectId(),
                         name:req.body.name,
                         email:req.body.email,

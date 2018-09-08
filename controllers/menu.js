@@ -16,27 +16,26 @@ exports.add=(req,res)=>{
     })
     .catch(error=>{
         console.log(error)
-        res.status(500).json({error:error})
+        res.status(500).json({code:1,error:error})
     })
 }
 
 exports.menu=(req,res)=>{
-    var menus=Menu().find().exec()
+    Menu
+    .exec()
     .then(result=>{
-        res.status(200).json({code:1,data:menus})
+        res.status(200).json({code:1,data:result})
     })
     .catch(error=>{
         res.status(500).json({error:error})
     })
-
 }
 
 exports.update=(req,res)=>{
     const id=req.params.id
-    var updateDate={}
-    Menu.update({_id:id},{$set:{name:req.body.name,price:req.body.price,}})
+    Menu.update({_id:id},{$set:{name:req.body.name,price:req.body.price}})
     .then(result=>{
-        res.status(200).json({code:1,message:"Menu updated"})
+        res.status(200).json({code:1,message:"Menu updated",data:result})
     })
     .catch(error=>{
         res.status(500).json({code:0,error:error})

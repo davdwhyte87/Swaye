@@ -11,7 +11,7 @@ User {/user}
 -/changepass [POST. old_password,new_password] *
 -/ [GET] *
 
-Admin
+Adminc
 ------
 -/admin/create
 -/admin/:id/delete
@@ -38,3 +38,4 @@ Transaction
 -/transaction/user/:id [GET]
 -/transaction/uconfirm/:tablennumber [GET]
 -/transaction/aconfirm/:tablennumber [GET]
+

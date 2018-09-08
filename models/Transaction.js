@@ -1,12 +1,13 @@
 const mongoose=require('mongoose')
 
-const orderSchema=mongoose.Schema({
+var transactionsSchema=mongoose.Schema({
     _id:mongoose.Schema.Types.ObjectId,
     summary:{type:String,required:true},
     price:{type:Number,required:true},
-    confirmed:{type:Boolean,required:true,default:false},
+    aconfirmed:{type:Boolean,default:false},
+    uconfirmed:{type:Boolean,default:false},
     date:{type:String,required:true},
     user:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'User'}
 })
 
-module.exports=mongoose.model('Order',orderSchema)
+module.exports=mongoose.model('Transaction',transactionsSchema)
