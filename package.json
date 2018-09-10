@@ -21,6 +21,7 @@
   "author": "David whyte John",
   "license": "MIT",
   "dependencies": {
+    "base64-img": "^1.0.4",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",

@@ -3,12 +3,14 @@ var router=express.Router()
 var Menu=require('../models/Menu')
 var mongoose=require('mongoose')
 const MenuController=require('../controllers/menu')
+const AdminAuth=require('../middleware/admin')
+const Auth=require('../middleware/auth')
 
-router.post('/add',MenuController.add)
+router.post('/add',AdminAuth,MenuController.add)
 //this gets all the menu items
-router.get('/',MenuController.menu)
+router.get('/',Auth,MenuController.menu)
 //updating a menu
-router.patch('/:id',MenuController.update)
-router.delete('/:id',MenuController.delete)
-
+router.patch('/:id',AdminAuth,MenuController.update)
+router.delete('/:id',AdminAuth,MenuController.delete)
+router.get('/:id/take/:take',Auth,MenuController.take)
 module.exports=router

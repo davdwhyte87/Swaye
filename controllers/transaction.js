@@ -1,5 +1,6 @@
 const Transaction=require('../models/Transaction')
 
+
 exports.uconfirm=(req,res)=>{
     //this function takes the user id from the userData
     var user_id=req.userData.userId
@@ -20,7 +21,7 @@ exports.uconfirm=(req,res)=>{
 exports.aconfirm=(req,res)=>{
     Transaction.update({_id:req.params.trans_id},{$set:{aconfirmed:true}}).then(trans=>{
         if(trans){
-            return res.status(200).json({code:1,message:"You have confirmed your transaction"})
+            return res.status(200).json({code:1,message:"Transaction confirmed"})
         }
         else{
             return res.status(200).json({code:0,message:"This transaction does not exist"})

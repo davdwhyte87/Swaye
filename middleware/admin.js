@@ -3,10 +3,15 @@ module.exports=(req,res,next)=>{
     try{
         const decode=jwt.verify(req.headers['token'],process.env.JWT)
         req.userData=decode
-        next()
+        if(req.userData.type=="admin"){
+            next()
+        }
+        else{
+            return res.status(500).json({code:0,message:"An error occurred"}) 
+        }
     }
     catch(error){
-        return res.status(500).json({code:0,message:"An error occured"})
+        return res.status(500).json({code:0,message:"An error occurred"})
     }
     
 }

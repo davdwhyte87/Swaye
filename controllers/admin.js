@@ -3,7 +3,6 @@ const mongoose=require('mongoose')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
-
 exports.create=(req,res)=>{
     Admin.findOne({email:req.body.email}).exec().then(admin=>{
         if(admin==null){
@@ -49,7 +48,7 @@ exports.login=(req,res)=>{
                     return res.status(500).json({code:0,message:"An error occurred"})
                 }
                 if(result){
-                    const token=jwt.sign({email:admin.email,adminId:admin._id},process.env.JWT,{
+                    const token=jwt.sign({email:admin.email,adminId:admin._id,type:"admin"},process.env.JWT,{
                         expiresIn:"24h"
                     })
                     return res.status(200).json({code:1,message:"Signin successfull",token:token}) 

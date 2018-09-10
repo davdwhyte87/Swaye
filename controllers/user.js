@@ -54,7 +54,7 @@ exports.signin=(req,res)=>{
                     return res.status(404).json({code:0,message:"An error occurred"})
                 }
                 if(result){
-                    const token=jwt.sign({email:user.email,userId:user._id},process.env.JWT,{
+                    const token=jwt.sign({email:user.email,userId:user._id,type:"user"},process.env.JWT,{
                         expiresIn:"1h"
                     })
                     return res.status(200).json({code:1,message:"Signin successfull",token:token}) 
