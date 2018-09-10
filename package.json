@@ -8,7 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "clean": "mkdir build",
+    "start": "npm run clean && npm run build-babel && nodemon --exec  babel-node --presets=env  -- server.js",
+    "build-babel": "babel -d ./build ./ -s --ignore node_modules",
+    "start-prod": "nodemon ./build/server.js"
   },
   "keywords": [
     "Js",
@@ -26,9 +29,12 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.12"
+    "mongoose": "^5.2.12",
+    "nodemon": "^1.18.4"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-cli": "^6.26.0",
     "morgan": "^1.9.0"
   }
 }
