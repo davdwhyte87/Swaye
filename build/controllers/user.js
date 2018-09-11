@@ -19,7 +19,6 @@ exports.signup = function (req, res) {
                 if (err) {
                     return res.status(500).json({ code: 0, error: err, message: "An error occurred" });
                 } else {
-                    code = Math.floor(Math.random() * 10 + 1) + Math.floor(Math.random() * 10 + 1) + Math.floor(Math.random() * 10 + 1) + Math.floor(Math.random() * 10 + 1) + Math.floor(Math.random() * 1 + 1); //genrate 5 random numbers
                     var user = new User({
                         _id: new mongoose.Types.ObjectId(),
                         name: req.body.name,
@@ -44,7 +43,7 @@ exports.signup = function (req, res) {
 //sign in a user
 exports.signin = function (req, res) {
     User.findOne({ email: req.body.email }).exec().then(function (user) {
-        if (user.length < 1) {
+        if (!user) {
             return res.status(404).json({ code: 0, message: "This account does not exist" });
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {

@@ -10,6 +10,7 @@ var admin_routes = require('./routes/admin');
 var order_routes = require('./routes/order');
 var menu_routes = require('./routes/menu');
 var transactions_routes = require('./routes/transaction');
+require('babel-core').transform("code");
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
