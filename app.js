@@ -8,6 +8,7 @@ const admin_routes=require('./routes/admin')
 const order_routes=require('./routes/order')
 const menu_routes=require('./routes/menu')
 const transactions_routes=require('./routes/transaction')
+var path = require('path')
 require('babel-core').transform("code")
 
 app.use((req,res,next)=>{
@@ -16,7 +17,8 @@ app.use((req,res,next)=>{
     next();
 })
 
-
+var dir = path.join(__dirname, 'img');
+app.use(express.static(dir));
 mongoose.connect(process.env.DB_URL,{useNewUrlParser:true});
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
