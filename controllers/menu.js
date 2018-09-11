@@ -104,3 +104,10 @@ exports.delete=(req,res)=>{
     })
 }
 
+exports.image=(req,res)=>{
+    var fs=require('fs')
+    let name=req.params.name
+    var img = fs.readFileSync('./img/menu/'+name);
+    res.writeHead(200, {'Content-Type': 'image/gif' })
+    res.end(img, 'binary')
+}

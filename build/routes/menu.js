@@ -15,5 +15,6 @@ router.get('/', Auth, MenuController.menu);
 router.patch('/:id', AdminAuth, MenuController.update);
 router.delete('/:id', AdminAuth, MenuController.delete);
 router.get('/:id/take/:take', Auth, MenuController.take);
+router.get('/img/:name', MenuController.image);
 module.exports = router;
 //# sourceMappingURL=menu.js.map

@@ -90,4 +90,12 @@ exports.delete = function (req, res) {
         res.status(200).json({ code: 0, message: "An error occured" });
     });
 };
+
+exports.image = function (req, res) {
+    var fs = require('fs');
+    var name = req.params.name;
+    var img = fs.readFileSync('./img/menu/' + name);
+    res.writeHead(200, { 'Content-Type': 'image/gif' });
+    res.end(img, 'binary');
+};
 //# sourceMappingURL=menu.js.map

@@ -11,7 +11,7 @@
     "clean": "mkdir build",
     "start": "nodemon server.js",
     "build-babel": "babel -d ./build ./ -s --ignore node_modules",
-    "start-prod": "npm run clean && npm run build-babel && nodemon ./build/server.js"
+    "start-prod": "rmdir build /s && npm run clean && npm run build-babel && nodemon ./build/server.js"
   },
   "keywords": [
     "Js",
