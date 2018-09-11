@@ -10,6 +10,7 @@ var admin_routes = require('./routes/admin');
 var order_routes = require('./routes/order');
 var menu_routes = require('./routes/menu');
 var transactions_routes = require('./routes/transaction');
+var path = require('path');
 require('babel-core').transform("code");
 
 app.use(function (req, res, next) {
@@ -18,6 +19,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+var dir = path.join(__dirname, 'img');
+app.use(express.static(dir));
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
