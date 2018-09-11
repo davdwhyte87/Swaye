@@ -6,15 +6,18 @@ const mongoose=require('mongoose')
 exports.add=(req,res)=>{
     var fname=randName()
     base64Img.img(req.body._image, 'img/menu', fname, function(err, filepath) {
+        
         if(err){
             return res.status(500).json({code:0,message:"An upload error occured",erro:err})
         }
         if(filepath){
+            var fn=filepath.split('\\').pop().split('/').pop()
+            console.log(fn)
             var menu=Menu({
                 _id: new mongoose.Types.ObjectId(),
                 name:req.body.name,
                 price:req.body.price,
-                image:fname,
+                image:fn,
                 qty:req.body.qty,
                 created_at:Date()
             })
