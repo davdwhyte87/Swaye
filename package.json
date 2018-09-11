@@ -13,6 +13,9 @@
     "build-babel": "babel -d ./build ./ -s --ignore node_modules",
     "start-prod": "rmdir build /s && npm run clean && npm run build-babel && nodemon ./build/server.js"
   },
+  "engines": {
+    "node":"8.11.3"
+  },
   "keywords": [
     "Js",
     "Node",

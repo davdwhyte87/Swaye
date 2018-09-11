@@ -3,9 +3,7 @@ var router=express.Router()
 const UserController=require('../controllers/user')
 const Auth=require('../middleware/auth')
 
-router.get("/hi",(req,res)=>{
-    res.status(200).json({message:"how far"})
-})
+
 router.get('/',Auth,UserController.user)
 router.post('/signup',UserController.signup)
 router.post('/signin',UserController.signin)
