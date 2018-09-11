@@ -44,7 +44,7 @@ exports.signup = function (req, res) {
 exports.signin = function (req, res) {
     User.findOne({ email: req.body.email }).exec().then(function (user) {
         if (!user) {
-            return res.status(404).json({ code: 0, message: "This account does not exist" });
+            return res.status(200).json({ code: 0, message: "This account does not exist" });
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (err) {
