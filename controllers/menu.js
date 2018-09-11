@@ -4,7 +4,7 @@ const mongoose=require('mongoose')
 
 
 exports.add=(req,res)=>{
-    var fname=randName()+".png"
+    var fname=randName()
     base64Img.img(req.body._image, 'img/menu', fname, function(err, filepath) {
         if(err){
             return res.status(500).json({code:0,message:"An upload error occured",erro:err})
