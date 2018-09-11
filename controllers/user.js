@@ -19,7 +19,6 @@ exports.signup=(req,res)=>{
                     .json({code:0,error:err,message:"An error occurred"})
                 }
                 else{
-                    code=Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 10) + 1)+Math.floor((Math.random() * 1) + 1)//genrate 5 random numbers
                     var user=new User({
                         _id:new mongoose.Types.ObjectId(),
                         name:req.body.name,
