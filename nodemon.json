@@ -1,6 +1,7 @@
 {
     "env":{
-        "DB_URL":"mongodb://localhost/SwayeDb",
+        "DB_URL_L":"mongodb://localhost/SwayeDb",
+        "DB_URL":"mongodb+srv://swaye:swayeisdope@cluster0-17bfx.mongodb.net/test?retryWrites=true",
         "ADMIN_PASS":"swaye12345",
         "ADMIN_EMAIL":"swaye_admin@gmail.com",
         "ADMIN_NAME":"Swaye_Admin",
