@@ -8,6 +8,7 @@ const admin_routes=require('./routes/admin')
 const order_routes=require('./routes/order')
 const menu_routes=require('./routes/menu')
 const transactions_routes=require('./routes/transaction')
+require('babel-core').transform("code")
 
 app.use((req,res,next)=>{
     res.header('Access-Control-Allow-Origin','*');
