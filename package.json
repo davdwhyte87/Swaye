@@ -14,7 +14,7 @@
     "start-prod": "rmdir build /s && npm run clean && npm run build-babel && nodemon ./build/server.js"
   },
   "engines": {
-    "node":"8.11.3"
+    "node": "8.11.3"
   },
   "keywords": [
     "Js",
@@ -31,14 +31,19 @@
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "express-validation": "^1.0.2",
+    "express-validator": "^5.3.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.12",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "validator": "^10.7.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
     "morgan": "^1.9.0"
   }
 }
