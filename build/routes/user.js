@@ -5,9 +5,6 @@ var router = express.Router();
 var UserController = require('../controllers/user');
 var Auth = require('../middleware/auth');
 
-router.get("/hi", function (req, res) {
-    res.status(200).json({ message: "how far" });
-});
 router.get('/', Auth, UserController.user);
 router.post('/signup', UserController.signup);
 router.post('/signin', UserController.signin);

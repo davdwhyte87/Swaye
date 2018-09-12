@@ -4,6 +4,7 @@ var User = require('../models/User');
 var bcrypt = require('bcrypt');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
+
 //test
 exports.sayhi = function (req, res) {
     res.status(200).json({ message: "how far" });
@@ -11,9 +12,16 @@ exports.sayhi = function (req, res) {
 
 //sign up function
 exports.signup = function (req, res) {
-    User.find({ email: req.body.email }).exec().then(function (user) {
+    req.check("name", "Name is required").isString().exists();
+    req.check("phone", "Invalid phone number").isLength({ min: 8 }).exists();
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
+    }
+    //check if a user exists
+    User.find({ phone: req.body.phone }).exec().then(function (user) {
         if (user.length > 0) {
-            return res.status(409).json({ code: 0, message: "This user already exists." });
+            return res.status(200).json({ code: 0, message: "This user already exists." });
         } else {
             bcrypt.hash(req.body.password, 10, function (err, hash) {
                 if (err) {
@@ -22,7 +30,7 @@ exports.signup = function (req, res) {
                     var user = new User({
                         _id: new mongoose.Types.ObjectId(),
                         name: req.body.name,
-                        email: req.body.email,
+                        phone: req.body.phone,
                         password: hash,
                         code: Math.floor(Math.random() * 90000) + 10000
                     });
@@ -42,16 +50,19 @@ exports.signup = function (req, res) {
 
 //sign in a user
 exports.signin = function (req, res) {
-    User.findOne({ email: req.body.email }).exec().then(function (user) {
+    //get the user by phone data
+    User.findOne({ phone: req.body.phone }).exec().then(function (user) {
         if (!user) {
             return res.status(200).json({ code: 0, message: "This account does not exist" });
         } else {
+            //check the password
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (err) {
                     return res.status(404).json({ code: 0, message: "An error occurred" });
                 }
                 if (result) {
-                    var token = jwt.sign({ email: user.email, userId: user._id, type: "user" }, process.env.JWT, {
+                    //create token
+                    var token = jwt.sign({ phone: user.phone, userId: user._id, type: "user" }, process.env.JWT, {
                         expiresIn: "1h"
                     });
                     return res.status(200).json({ code: 1, message: "Signin successfull", token: token });
@@ -68,6 +79,11 @@ exports.signin = function (req, res) {
 
 //confirms a user account with a code
 exports.confirm = function (req, res) {
+    req.check("code", "You need the code").exists();
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
+    }
     User.findOne({ code: req.body.code }).exec().then(function (user) {
         if (user) {
             user.confirmed = true;
@@ -88,12 +104,12 @@ exports.confirm = function (req, res) {
 };
 
 exports.forgot_pass = function (req, res) {
-    User.findOne({ email: req.body.email }).exec().then(function (user) {
+    User.findOne({ phone: req.body.phone }).exec().then(function (user) {
         if (user) {
             user.code = Math.floor(Math.random() * 90000) + 10000;
             user.save().then(function (result) {
                 console.log(result);
-                return res.status(200).json({ code: 1, message: "A meail has been sent with your code" });
+                return res.status(200).json({ code: 1, message: "A meail has been sent with your code", data: result });
             }).catch(function (error) {
                 console.log(error);
                 return res.status(500).json({ code: 0, message: "An error occured" });
@@ -122,6 +138,8 @@ exports.fchange_pass = function (req, res) {
                     return res.status(500).json({ code: 0, error: error, message: "An error occurred" });
                 });
             });
+        } else {
+            return res.status(200).json({ code: 0, message: "Wrong code!" });
         }
     }).catch(function (error) {
         console.log(error);

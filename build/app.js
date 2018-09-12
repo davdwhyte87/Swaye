@@ -12,7 +12,8 @@ var menu_routes = require('./routes/menu');
 var transactions_routes = require('./routes/transaction');
 var path = require('path');
 require('babel-core').transform("code");
-
+var expressValidator = require('express-validator');
+app.use(expressValidator());
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
