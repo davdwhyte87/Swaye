@@ -65,7 +65,7 @@ exports.signin = function (req, res) {
                     var token = jwt.sign({ phone: user.phone, userId: user._id, type: "user" }, process.env.JWT, {
                         expiresIn: "1h"
                     });
-                    return res.status(200).json({ code: 1, message: "Signin successfull", token: token });
+                    return res.status(200).json({ code: 1, message: "Signin successfull", token: token, data: user });
                 } else {
                     return res.status(200).json({ code: 0, message: "Authentication failed" });
                 }
