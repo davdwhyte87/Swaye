@@ -12,7 +12,7 @@ module.exports=(req,res,next)=>{
     }
     catch(error){
         console.log(error)
-        return res.status(500).json({code:0,message:"An error occured"})
+        return res.status(200).json({code:190,message:"An error occured"})
     }
     
 }
