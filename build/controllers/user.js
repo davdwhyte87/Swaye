@@ -13,13 +13,13 @@ exports.sayhi = function (req, res) {
 //sign up function
 exports.signup = function (req, res) {
     req.check("name", "Name is required").isString().exists();
-    req.check("phone", "Invalid phone number").isLength({ min: 8 }).exists();
+    req.check("email", "You need a valid email").isLength({ min: 8 }).exists();
     var errors = req.validationErrors();
     if (errors) {
         return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
     }
     //check if a user exists
-    User.find({ phone: req.body.phone }).exec().then(function (user) {
+    User.find({ phone: req.body.email }).exec().then(function (user) {
         if (user.length > 0) {
             return res.status(200).json({ code: 0, message: "This user already exists." });
         } else {
@@ -30,12 +30,21 @@ exports.signup = function (req, res) {
                     var user = new User({
                         _id: new mongoose.Types.ObjectId(),
                         name: req.body.name,
-                        phone: req.body.phone,
+                        email: req.body.email,
                         password: hash,
                         code: Math.floor(Math.random() * 90000) + 10000
                     });
                     user.save().then(function (result) {
                         //send user a mail
+                        var sgMail = require('@sendgrid/mail');
+                        sgMail.setApiKey(process.env.SMS_KEY);
+                        var msg = {
+                            to: user.email,
+                            from: 'swaye407@gmail.com',
+                            subject: 'Swaye Confirmation code',
+                            html: '<p>Thank you for using swaye, here is your code:' + user.code + '</p>'
+                        };
+                        sgMail.send(msg);
                         console.log(result);
                         res.status(200).json({ code: 1, message: "User created successfully", data: user });
                     }).catch(function (error) {
@@ -50,8 +59,14 @@ exports.signup = function (req, res) {
 
 //sign in a user
 exports.signin = function (req, res) {
+    //validate data
+    req.check("email", "You need a valid email").isLength({ min: 8 }).exists();
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
+    }
     //get the user by phone data
-    User.findOne({ phone: req.body.phone }).exec().then(function (user) {
+    User.findOne({ email: req.body.email }).exec().then(function (user) {
         if (!user) {
             return res.status(200).json({ code: 0, message: "This account does not exist" });
         } else {
@@ -62,7 +77,7 @@ exports.signin = function (req, res) {
                 }
                 if (result) {
                     //create token
-                    var token = jwt.sign({ phone: user.phone, userId: user._id, type: "user" }, process.env.JWT, {
+                    var token = jwt.sign({ email: user.email, userId: user._id, type: "user" }, process.env.JWT, {
                         expiresIn: "1h"
                     });
                     return res.status(200).json({ code: 1, message: "Signin successfull", token: token, data: user });
@@ -104,10 +119,19 @@ exports.confirm = function (req, res) {
 };
 
 exports.forgot_pass = function (req, res) {
-    User.findOne({ phone: req.body.phone }).exec().then(function (user) {
+    User.findOne({ email: req.body.email }).exec().then(function (user) {
         if (user) {
             user.code = Math.floor(Math.random() * 90000) + 10000;
             user.save().then(function (result) {
+                var sgMail = require('@sendgrid/mail');
+                sgMail.setApiKey(process.env.SMS_KEY);
+                var msg = {
+                    to: user.email,
+                    from: 'swaye407@gmail.com',
+                    subject: 'Swaye Confirmation code',
+                    html: '<p>Thank you for using swaye, here is your code:' + user.code + '</p>'
+                };
+                sgMail.send(msg);
                 console.log(result);
                 return res.status(200).json({ code: 1, message: "A meail has been sent with your code", data: result });
             }).catch(function (error) {
@@ -123,6 +147,13 @@ exports.forgot_pass = function (req, res) {
 };
 
 exports.fchange_pass = function (req, res) {
+    //validate req data
+    req.check("code", "Name is required").isString().exists();
+    req.check("new_password", "A password is required").exists();
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
+    }
     User.findOne({ code: req.body.code }).exec().then(function (user) {
         if (user) {
             bcrypt.hash(req.body.new_password, 10, function (err, hash) {

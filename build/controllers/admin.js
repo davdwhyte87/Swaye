@@ -37,7 +37,7 @@ exports.create = function (req, res) {
 
 exports.login = function (req, res) {
     Admin.findOne({ email: req.body.email }).exec().then(function (admin) {
-        if (admin.length < 1) {
+        if (admin == null) {
             return res.status(200).json({ code: 0, message: "This admin does not exist" });
         } else {
             bcrypt.compare(req.body.password, admin.password, function (err, result) {
@@ -54,6 +54,9 @@ exports.login = function (req, res) {
                 }
             });
         }
+    }).catch(function (err) {
+        console.log(err);
+        return res.status(500).json({ code: 0, message: "An error occurred" });
     });
 };
 

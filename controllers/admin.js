@@ -39,7 +39,7 @@ exports.create=(req,res)=>{
 
 exports.login=(req,res)=>{
     Admin.findOne({email:req.body.email}).exec().then(admin=>{
-        if(admin.length<1){
+        if(admin==null){
             return res.status(200).json({code:0,message:"This admin does not exist"})
         }
         else{
@@ -58,6 +58,10 @@ exports.login=(req,res)=>{
                 }
             })
         }
+    })
+    .catch(err=>{
+        console.log(err)
+        return res.status(500).json({code:0,message:"An error occurred"})
     })
     
 }

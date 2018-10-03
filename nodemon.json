@@ -1,11 +1,12 @@
 {
     "env":{
         "DB_URL_L":"mongodb://localhost/SwayeDb",
-        "DB_URL":"mongodb+srv://swaye:swayeisdope@cluster0-17bfx.mongodb.net/test?retryWrites=true",
+        "DB_URL":"mongodb+srv://swaye:swayeisdope@cluster0-17bfx.mongodb.net/swaye?retryWrites=true",
         "ADMIN_PASS":"swaye12345",
         "ADMIN_EMAIL":"swaye_admin@gmail.com",
         "ADMIN_NAME":"Swaye_Admin",
-        "JWT":"wwwoieooooeieoeoeoirrororiroro349949i5ioriokrork"
+        "JWT":"wwwoieooooeieoeoeoirrororiroro349949i5ioriokrork",
+        "SMS_KEY":"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"
         
     }
 }

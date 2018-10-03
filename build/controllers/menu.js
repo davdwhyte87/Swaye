@@ -18,7 +18,7 @@ exports.add = function (req, res) {
                 _id: new mongoose.Types.ObjectId(),
                 name: req.body.name,
                 price: req.body.price,
-                image: fn,
+                image: req.body._image,
                 qty: req.body.qty,
                 created_at: Date()
             });
