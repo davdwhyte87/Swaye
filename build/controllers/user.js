@@ -19,7 +19,7 @@ exports.signup = function (req, res) {
         return res.status(200).json({ code: 0, message: "An error occured", errors: errors });
     }
     //check if a user exists
-    User.find({ phone: req.body.email }).exec().then(function (user) {
+    User.find({ email: req.body.email }).exec().then(function (user) {
         if (user.length > 0) {
             return res.status(200).json({ code: 0, message: "This user already exists." });
         } else {
@@ -73,12 +73,12 @@ exports.signin = function (req, res) {
             //check the password
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (err) {
-                    return res.status(404).json({ code: 0, message: "An error occurred" });
+                    return res.status(200).json({ code: 0, message: "An error occurred" });
                 }
                 if (result) {
                     //create token
                     var token = jwt.sign({ email: user.email, userId: user._id, type: "user" }, process.env.JWT, {
-                        expiresIn: "1h"
+                        expiresIn: "24h"
                     });
                     return res.status(200).json({ code: 1, message: "Signin successfull", token: token, data: user });
                 } else {
