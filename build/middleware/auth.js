@@ -5,7 +5,7 @@ module.exports = function (req, res, next) {
     try {
         jwt.verify(req.headers['token'], process.env.JWT, function (err, dc) {
             if (err) {
-                return res.status(200).json({ code: 0, message: "An error occured" });
+                return res.status(500).json({ code: 0, message: "An error occured" });
             }
             req.userData = dc;
             console.log(dc);
@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
         });
     } catch (error) {
         console.log(error);
-        return res.status(200).json({ code: 190, message: "An error occured" });
+        return res.status(500).json({ code: 190, message: "An error occured" });
     }
 };
 //# sourceMappingURL=auth.js.map
