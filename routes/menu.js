@@ -9,6 +9,7 @@ const Auth=require('../middleware/auth')
 router.post('/add',AdminAuth,MenuController.add)
 //this gets all the menu items
 router.get('/',Auth,MenuController.menu)
+router.get('/:id',Auth,MenuController.menu_single)
 //updating a menu
 router.patch('/:id',AdminAuth,MenuController.update)
 router.delete('/:id',AdminAuth,MenuController.delete)

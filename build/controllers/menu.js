@@ -50,6 +50,15 @@ exports.menu = function (req, res) {
     });
 };
 
+exports.menu_single = function (req, res) {
+    var id = req.params.id;
+    Menu.findOne({ _id: id }).exec().then(function (result) {
+        res.status(200).json({ code: 1, data: result });
+    }).catch(function (error) {
+        res.status(500).json({ error: error });
+    });
+};
+
 exports.update = function (req, res) {
     var id = req.params.id;
     Menu.update({ _id: id }, { $set: { name: req.body.name, price: req.body.price, qty: req.body.qty } }).then(function (result) {

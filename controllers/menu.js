@@ -56,6 +56,19 @@ exports.menu=(req,res)=>{
     })
 }
 
+exports.menu_single=(req,res)=>{
+    const id=req.params.id
+    Menu.findOne({_id:id})
+    .exec()
+    .then(result=>{
+        res.status(200).json({code:1,data:result})
+    })
+    .catch(error=>{
+        res.status(500).json({error:error})
+    })
+}
+
+
 exports.update=(req,res)=>{
     const id=req.params.id
     Menu.update({_id:id},{$set:{name:req.body.name,price:req.body.price,qty:req.body.qty}})
@@ -66,6 +79,8 @@ exports.update=(req,res)=>{
         res.status(500).json({code:0,error:error})
     })
 }
+
+
 
 exports.take=(req,res)=>{
     const id=req.params.id
